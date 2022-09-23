@@ -2,10 +2,10 @@ import { ImageList } from "./ImageGallery.styled";
 import ImageGalleryLIstItem from "components/ImageGalleryItem/ImageGalleryItem";
 
 
-export default function ImageGallery() {
+export default function ImageGallery({pictures}) {
   return (
       <ImageList>
-          <ImageGalleryLIstItem/>
+      <ImageGalleryLIstItem img={pictures} />
     </ImageList>
   )
 }
