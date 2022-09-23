@@ -1,11 +1,11 @@
-import { ImageGalleryItemStyle, ImageGalleryItemImg } from "./ImageGalleryItem.styled"
+import { ImageGalleryItem, ImageGalleryItemImg } from "./ImageGalleryItem.styled"
 
-export default function ImageGalleryItem() {
+export default function ImageGalleryLIstItem() {
   return (
       
-      <ImageGalleryItemStyle class="gallery-item">
+      <ImageGalleryItem >
   <ImageGalleryItemImg src="" alt="" />
-</ImageGalleryItemStyle>
+</ImageGalleryItem>
       
   )
 }

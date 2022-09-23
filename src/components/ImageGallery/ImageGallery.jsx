@@ -1,8 +1,11 @@
 import { ImageList } from "./ImageGallery.styled";
+import ImageGalleryLIstItem from "components/ImageGalleryItem/ImageGalleryItem";
 
 
 export default function ImageGallery() {
   return (
-    <ImageList></ImageList>
+      <ImageList>
+          <ImageGalleryLIstItem/>
+    </ImageList>
   )
 }

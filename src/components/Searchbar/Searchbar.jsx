@@ -16,6 +16,7 @@ const initialValues = {
 };
 export default function SearcBar (propa) {
     const handleSubmit = (values, { resetForm }) => {
+        propa.onFetch(values)
         console.log(values)
         resetForm();
         // propa.onSubmit(values);
