@@ -17,40 +17,39 @@ export class App extends Component {
 
   componentDidMount() {
     
-    this.getImg()
+    this.fetchImg()
   };
 
-  // fetchImg(text) {
-  //   const {page} = this.state;
-  //   this.setState({
-  //     isLoading: true
-  //   })
-  //   axios.get(`https://pixabay.com/api/?q=${text}&page=${page}&key=${KEY}
-  //   &image_type=photo&orientation=horizontal&per_page=12`)
-  //     .then(({ data }) => {
-  //       console.log(data)
-  //       this.setState(({ picture }) => {
-  //         return {
-  //         picture: [...picture, data]
-  //       }
-  //     })
-  //     }).catch(error => {
-  //       this.setState({
-  //       error
-  //     })
-  //   }).finally(() => this.setState({loading: false}))
-  // };
-  async getImg() {
+  fetchImg(text) {
     const {page} = this.state;
-    try {
-      const response = await axios.get(`https://pixabay.com/api/?q=cat&page=${page}&key=${KEY}
-    &image_type=photo&orientation=horizontal&per_page=12`);
-      console.log(response)
-      return response
-    } catch (error) {
+    this.setState({
+      isLoading: true
+    })
+    axios.get(`https://pixabay.com/api/?q=cat&page=1&key=29175258-0e972b66084e1db5719a62740&image_type=photo&orientation=horizontal&per_page=12`)
+      .then(({ data }) => {
+        console.log(data)
+        this.setState(({ picture }) => {
+          return {
+          picture: [...picture, data]
+        }
+      })
+      }).catch(error => {
+        this.setState({
+        error
+      })
+    }).finally(() => this.setState({loading: false}))
+  };
+  // async getImg() {
+  //   const {page} = this.state;
+  //   try {
+  //     const response = await axios.get(`https://pixabay.com/api/?q=dog&page=${page}&key=${KEY}
+  //   &image_type=photo&orientation=horizontal&per_page=12`);
+  //     console.log(response)
+  //     return response
+  //   } catch (error) {
       
-    }
-  }
+  //   }
+  // }
 
 
 
