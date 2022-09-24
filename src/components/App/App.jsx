@@ -2,9 +2,11 @@ import { Component } from "react";
 import SearcBar from "components/Searchbar/Searchbar";
 import { AppStyle } from "./App.styled";
 import ImageGallery from "components/ImageGallery/ImageGallery";
-import { fetchImg } from "components/Api/Api";
+// import { fetchImg } from "components/Api/Api";
 import Button from "components/Button/Button";
 import axios from "axios";
+import Loader from "components/Loader/Loader";
+
 
 const KEY = "29175258-0e972b66084e1db5719a62740"
 
@@ -23,34 +25,39 @@ export class App extends Component {
     return response.data
 };
 
-  async componentDidMount() {
+  // async componentDidMount() {
+  //   const { search } = this.state
   
-  //   const { fetchImg } = this
+  // //   const { fetchImg } = this
     
-  //   try {
-  //     this.setState({ isLoading: true })
+  // //   try {
+  // //     this.setState({ isLoading: true })
      
-  //     const picture = await fetchImg().then(data => data.hits)
-  //   this.setState({picture})
-  //  } catch (error) {
-  //   console.log(error)
-  //  } finally {
-  //    this.setState({isLoading:false})
-  //   }
+  // //     const picture = await fetchImg().then(data => data.hits)
+  // //   this.setState({picture})
+  // //  } catch (error) {
+  // //   console.log(error)
+  // //  } finally {
+  // //    this.setState({isLoading:false})
+  // //   }
     
-  };
+  // };
 
   async componentDidUpdate(_, prevState) {
      const {fetchImg} = this
-    const { page, search } = this.state
+    const { page, search, picture } = this.state
+    if (prevState.search !== search) {
+      this.setState({picture:[]})
+    }
+    
     if (prevState.page !== page || 
       prevState.search !== search) {
       try {
      this.setState({isLoading: true})
         const data = await fetchImg(page, search).then(data => data.hits)
-        this.setState(({ picture }) => {
-      
-        return{
+        this.setState(({picture} ) => {
+           return {
+          
           picture: [...picture, ...data]
         }
       });
@@ -81,8 +88,8 @@ export class App extends Component {
 //     }
 //   };
 
-  onSearch = (search) => {
-    const {name} = search
+  onSearch = (text) => {
+    const {name} = text
    this.setState({search: name})
   }
 
@@ -92,15 +99,15 @@ export class App extends Component {
     }));
   };
 
- 
-  render() {
+   render() {
     const { picture, isLoading, error } = this.state;
     const {loadMore, onSearch} = this
     return (
       <AppStyle>
         {error && (<p>UPS</p>)}
         <SearcBar onSearch={onSearch}  />
-        {isLoading ? "isloading" : <ImageGallery pictures={picture} />}
+        {isLoading ? 
+        <Loader/> : <ImageGallery pictures={picture} />}
         <Button onClick={loadMore} />
     </AppStyle>
   );

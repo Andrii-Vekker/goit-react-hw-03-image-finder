@@ -14,13 +14,11 @@ const schema = yup.object().shape({
 const initialValues = {
         name: '',
 };
-export default function SearcBar (propa) {
+export default function SearcBar ({onSearch}) {
     const handleSubmit = (values, { resetForm }) => {
-        propa.onSearch(values)
+        onSearch(values)
         resetForm();
-        propa.onSubmit(values);
     };
-
     
     return (
      
