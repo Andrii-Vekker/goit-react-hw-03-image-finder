@@ -1,7 +1,6 @@
-import { ImageGalleryItem, ImageGalleryItemImg } from "./ImageGalleryItem.styled"
+import { ImageGalleryItem, ImageGalleryItemImg } from "./ImageGalleryItem.styled";
 
 export default function ImageGalleryLIstItem({ img }) {
-  console.log(img)
   return (
       <>
       {img.map(i => (
