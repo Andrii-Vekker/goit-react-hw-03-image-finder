@@ -1,6 +1,8 @@
 import { ImageGalleryItem, ImageGalleryItemImg } from "./ImageGalleryItem.styled";
 
 export default function ImageGalleryLIstItem({ img }) {
+
+   
   return (
       <>
       {img.map(i => (

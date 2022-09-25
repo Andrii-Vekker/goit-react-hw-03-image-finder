@@ -4,8 +4,8 @@ import ImageGalleryLIstItem from "components/ImageGalleryItem/ImageGalleryItem";
 
 export default function ImageGallery({ pictures }) {
   return (
-      <ImageList>
+    <ImageList>
       <ImageGalleryLIstItem img={pictures} />
     </ImageList>
-  )
-}
+  );
+};

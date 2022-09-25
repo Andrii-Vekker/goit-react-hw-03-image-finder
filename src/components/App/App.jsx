@@ -6,6 +6,7 @@ import ImageGallery from "components/ImageGallery/ImageGallery";
 import Button from "components/Button/Button";
 import axios from "axios";
 import Loader from "components/Loader/Loader";
+import ModalPic from "components/Modal/Modal";
 
 
 const KEY = "29175258-0e972b66084e1db5719a62740"
@@ -16,7 +17,8 @@ export class App extends Component {
     isLoading: false,
     error: null,
     page: 1,
-    search: ""
+    search: "",
+    showModal: false
   };
   fetchImg = async () => {
     const { search, page } = this.state
@@ -25,27 +27,19 @@ export class App extends Component {
     return response.data
 };
 
-  // async componentDidMount() {
-  //   const { search } = this.state
+   componentDidMount() {
+     window.addEventListener("keydown", this.hadndleKeyDown)
   
-  // //   const { fetchImg } = this
     
-  // //   try {
-  // //     this.setState({ isLoading: true })
-     
-  // //     const picture = await fetchImg().then(data => data.hits)
-  // //   this.setState({picture})
-  // //  } catch (error) {
-  // //   console.log(error)
-  // //  } finally {
-  // //    this.setState({isLoading:false})
-  // //   }
-    
-  // };
+  };
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.hadndleKeyDown)
+  }
 
   async componentDidUpdate(_, prevState) {
      const {fetchImg} = this
-    const { page, search, picture } = this.state
+    const { page, search, } = this.state
     if (prevState.search !== search) {
       this.setState({picture:[]})
     }
@@ -70,6 +64,11 @@ export class App extends Component {
     };
   };
 
+  hadndleKeyDown = e => {
+    if (e.code === "Escape") {
+      this.setState({ showModal: false })
+    }
+  }
 // async fetchPictures() {
 //     const { search, page } = this.state;
 //     this.setState({ isLoading: true });
@@ -99,11 +98,25 @@ export class App extends Component {
     }));
   };
 
+  
+
+  toggleModal = (e) => {
+    if (e.target.nodeName === "IMG") {
+      this.setState(({ showModal }) => ({
+        showModal: !showModal
+      }));
+    };
+ 
+  };
+
+
+
    render() {
-    const { picture, isLoading, error } = this.state;
-    const {loadMore, onSearch} = this
+     const { picture, isLoading, error, showModal } = this.state;
+    const {loadMore, onSearch, toggleModal} = this
     return (
-      <AppStyle>
+      <AppStyle   onClick={toggleModal}>
+        {showModal && <ModalPic>< img src="" alt=""/></ModalPic>}
         {error && (<p>UPS</p>)}
         <SearcBar onSearch={onSearch}  />
         {isLoading ? 
@@ -113,3 +126,4 @@ export class App extends Component {
   );
  }
 };
+// largeImageURL
