@@ -19,8 +19,9 @@ export class App extends Component {
     page: 1,
     search: "",
     showModal: false,
-    imgURL: ""
+    imgURL: "",
   };
+  
   fetchImg = async () => {
     const { search, page } = this.state;
     const response = await axios.get(`https://pixabay.com/api/?q=${search}&page=${page}
@@ -39,7 +40,7 @@ export class App extends Component {
   };
 
   async componentDidUpdate(_, prevState) {
-    const { fetchImg } = this;
+    const { fetchImg, } = this;
     const { page, search, } = this.state;
     if (prevState.search !== search) {
       this.setState({ picture: [] });
@@ -108,20 +109,22 @@ export class App extends Component {
       }));
     };
    };
+  
   getModalContent(img) {
-        console.log(img)
-    this.setState({imgURL: img})
+    return {
+      img
+   }
+  
   };
 
  
-
   render() {
     const { picture, isLoading, error, showModal, imgURL } = this.state;
-    const {loadMore, onSearch, toggleModal, getModalContent} = this
-    // const largeImg = getModalContent()
+    const { loadMore, onSearch, toggleModal, getModalContent } = this
+    console.log(imgURL)
     return (
       <AppStyle   onClick={toggleModal}>
-        {showModal && <ModalPic>< img src={imgURL} alt=""/></ModalPic>}
+        {showModal && <ModalPic><img src={getModalContent()} alt=""/></ModalPic>}
         {error && (<p>UPS</p>)}
         <SearcBar onSearch={onSearch}  />
         {isLoading ? 
