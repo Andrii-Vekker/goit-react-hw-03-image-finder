@@ -8,7 +8,7 @@ export default function ModalPic({ children, onClick }) {
     return (
          createPortal (<Overlay>
             <Modal >
-                {children}
+               < img src="" alt=""/>
             </Modal>
         </Overlay>, modalRoot)
         

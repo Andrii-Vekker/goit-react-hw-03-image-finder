@@ -106,8 +106,7 @@ export class App extends Component {
         showModal: !showModal
       }));
     };
- 
-  };
+   };
 
 
 
