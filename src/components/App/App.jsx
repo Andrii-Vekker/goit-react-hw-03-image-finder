@@ -31,8 +31,7 @@ export class App extends Component {
 
    componentDidMount() {
      window.addEventListener("keydown", this.hadndleKeyDown);
-  
-    
+       
   };
 
   componentWillUnmount() {
@@ -65,12 +64,55 @@ export class App extends Component {
    
     };
   };
+  
 
   hadndleKeyDown = e => {
     if (e.code === "Escape") {
       this.setState({ showModal: false })
     };
   };
+
+
+  onSearch = (text) => {
+    const {name} = text
+   this.setState({search: name})
+  }
+
+  loadMore = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1
+    }));
+  };
+
+  toggleModal = (e) => {
+    if (e.target.nodeName === "IMG") {
+      this.setState(({ showModal }) => ({
+        showModal: !showModal
+      }));
+    };
+   };
+  
+  getModalContent = (img) => {
+     this.setState({imgURL: img})
+  };
+
+   render() {
+    const { picture, isLoading, error, showModal, imgURL } = this.state;
+    const { loadMore, onSearch, toggleModal, getModalContent } = this
+    console.log(imgURL)
+    return (
+      <AppStyle   onClick={toggleModal}>
+        {showModal && <ModalPic><img src={imgURL} alt=""/></ModalPic>}
+        {error && (<p>UPS</p>)}
+        <SearcBar onSearch={onSearch}  />
+        {isLoading ? 
+          <Loader /> : <ImageGallery pictures={picture} getModalPic={getModalContent} />}
+        {picture.length > 0 && <Button onClick={loadMore} />}
+    </AppStyle>
+  );
+  };
+};
+
 // async fetchPictures() {
 //     const { search, page } = this.state;
 //     this.setState({ isLoading: true });
@@ -89,49 +131,11 @@ export class App extends Component {
 //     }
 //   };
 
-  onSearch = (text) => {
-    const {name} = text
-   this.setState({search: name})
-  }
-
-  loadMore = () => {
-    this.setState(prevState => ({
-      page: prevState.page + 1
-    }));
-  };
-
-  
-
-  toggleModal = (e) => {
-    if (e.target.nodeName === "IMG") {
-      this.setState(({ showModal }) => ({
-        showModal: !showModal
-      }));
-    };
-   };
-  
-  getModalContent(img) {
-    return {
-      img
-   }
-  
-  };
-
- 
-  render() {
-    const { picture, isLoading, error, showModal, imgURL } = this.state;
-    const { loadMore, onSearch, toggleModal, getModalContent } = this
-    console.log(imgURL)
-    return (
-      <AppStyle   onClick={toggleModal}>
-        {showModal && <ModalPic><img src={getModalContent()} alt=""/></ModalPic>}
-        {error && (<p>UPS</p>)}
-        <SearcBar onSearch={onSearch}  />
-        {isLoading ? 
-          <Loader /> : <ImageGallery pictures={picture} getModalPic={getModalContent} />}
-        <Button onClick={loadMore} />
-    </AppStyle>
-  );
- }
-};
-// largeImageURL
+// function endlessScroll(gallery) {
+//   const { height: cardHeight } =
+//     gallery.firstElementChild.getBoundingClientRect();
+//   window.scrollBy({
+//     top: cardHeight * 2,
+//     behavior: 'smooth',
+//   });
+// }

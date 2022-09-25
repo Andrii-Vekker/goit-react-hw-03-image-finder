@@ -1,9 +1,6 @@
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { Header, SearchForm, SearchFormBtn, SearchFormBtnLabel, SearchInput } from './SearchBar.styled';
-// import { FormContainer, BtnAdd, Label, Span, Input } from './Form.styled';
-// import { nanoid } from 'nanoid';
-// import PropTypes from 'prop-types';
 
 const schema = yup.object().shape({
     name: yup.string().required("Please enter name of picture"),
