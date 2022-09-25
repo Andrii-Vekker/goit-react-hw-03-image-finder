@@ -3,12 +3,12 @@ import { createPortal } from "react-dom";
 
 const modalRoot = document.querySelector("#modal-root")
 
-export default function ModalPic({ children, onClick }) {
+export default function ModalPic({ children }) {
  
     return (
          createPortal (<Overlay>
             <Modal >
-               < img src="" alt=""/>
+               {children}
             </Modal>
         </Overlay>, modalRoot)
         

@@ -18,31 +18,32 @@ export class App extends Component {
     error: null,
     page: 1,
     search: "",
-    showModal: false
+    showModal: false,
+    imgURL: ""
   };
   fetchImg = async () => {
-    const { search, page } = this.state
+    const { search, page } = this.state;
     const response = await axios.get(`https://pixabay.com/api/?q=${search}&page=${page}
     &key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`);
-    return response.data
+    return response.data;
 };
 
    componentDidMount() {
-     window.addEventListener("keydown", this.hadndleKeyDown)
+     window.addEventListener("keydown", this.hadndleKeyDown);
   
     
   };
 
   componentWillUnmount() {
-    window.removeEventListener("keydown", this.hadndleKeyDown)
-  }
+    window.removeEventListener("keydown", this.hadndleKeyDown);
+  };
 
   async componentDidUpdate(_, prevState) {
-     const {fetchImg} = this
-    const { page, search, } = this.state
+    const { fetchImg } = this;
+    const { page, search, } = this.state;
     if (prevState.search !== search) {
-      this.setState({picture:[]})
-    }
+      this.setState({ picture: [] });
+    };
     
     if (prevState.page !== page || 
       prevState.search !== search) {
@@ -50,16 +51,16 @@ export class App extends Component {
      this.setState({isLoading: true})
         const data = await fetchImg(page, search).then(data => data.hits)
         this.setState(({picture} ) => {
-           return {
+          return {
           
-          picture: [...picture, ...data]
-        }
+            picture: [...picture, ...data]
+          };
       });
    } catch (error) {
     console.log(error)
    } finally {
      this.setState({isLoading:false})
-    }
+      };
    
     };
   };
@@ -67,8 +68,8 @@ export class App extends Component {
   hadndleKeyDown = e => {
     if (e.code === "Escape") {
       this.setState({ showModal: false })
-    }
-  }
+    };
+  };
 // async fetchPictures() {
 //     const { search, page } = this.state;
 //     this.setState({ isLoading: true });
@@ -107,19 +108,24 @@ export class App extends Component {
       }));
     };
    };
+  getModalContent(img) {
+        console.log(img)
+    this.setState({imgURL: img})
+  };
 
+ 
 
-
-   render() {
-     const { picture, isLoading, error, showModal } = this.state;
-    const {loadMore, onSearch, toggleModal} = this
+  render() {
+    const { picture, isLoading, error, showModal, imgURL } = this.state;
+    const {loadMore, onSearch, toggleModal, getModalContent} = this
+    // const largeImg = getModalContent()
     return (
       <AppStyle   onClick={toggleModal}>
-        {showModal && <ModalPic>< img src="" alt=""/></ModalPic>}
+        {showModal && <ModalPic>< img src={imgURL} alt=""/></ModalPic>}
         {error && (<p>UPS</p>)}
         <SearcBar onSearch={onSearch}  />
         {isLoading ? 
-        <Loader/> : <ImageGallery pictures={picture} />}
+          <Loader /> : <ImageGallery pictures={picture} getModalPic={getModalContent} />}
         <Button onClick={loadMore} />
     </AppStyle>
   );
