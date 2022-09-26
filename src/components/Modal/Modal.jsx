@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 
 const modalRoot = document.querySelector("#modal-root")
 
-export default function ModalPic({ children }) {
- 
+export default function ModalPic({ children ,closeModal }) {
+    function onClose(e) {
+     closeModal()
+ }
     return (
-         createPortal (<Overlay>
+         createPortal (<Overlay onClick={onClose}>
             <Modal >
                {children}
             </Modal>

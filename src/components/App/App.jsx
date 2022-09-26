@@ -1,12 +1,13 @@
-import { Component, createRef } from "react";
+import { Component } from "react";
 import SearcBar from "components/Searchbar/Searchbar";
 import { AppStyle } from "./App.styled";
 import ImageGallery from "components/ImageGallery/ImageGallery";
-// import { fetchImg } from "components/Api/Api";
 import Button from "components/Button/Button";
 import axios from "axios";
 import Loader from "components/Loader/Loader";
 import ModalPic from "components/Modal/Modal";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -50,7 +51,7 @@ componentDidMount() {
     if (prevState.page !== page || 
       prevState.search !== search) {
       try {
-     this.setState({isLoading: true})
+        this.setState({isLoading: true})
         const data = await fetchImg(page, search).then(data => data.hits)
         this.setState(({picture} ) => {
           return {
@@ -59,7 +60,7 @@ componentDidMount() {
           };
       });
    } catch (error) {
-    console.log(error)
+     toast.error("Error loading. Try again")
    } finally {
      this.setState({isLoading:false})
       };
@@ -80,7 +81,8 @@ componentDidMount() {
    this.setState({search: name})
   }
 
-  loadMore = () => {
+  loadMore = (e) => {
+    e.preventDefault()
     this.setState(prevState => ({
       page: prevState.page + 1
     }));
@@ -92,7 +94,11 @@ componentDidMount() {
         showModal: !showModal
       }));
     };
-   };
+  };
+  
+  close = () => {
+    this.setState({showModal: false})
+  }
   
   getModalContent = (img) => {
      this.setState({imgURL: img})
@@ -100,10 +106,23 @@ componentDidMount() {
 
    render() {
     const { picture, isLoading, error, showModal, imgURL } = this.state;
-    const { loadMore, onSearch, toggleModal, getModalContent } = this
+    const { loadMore, onSearch, toggleModal, getModalContent, close } = this
     return (
-      <AppStyle   onClick={toggleModal}>
-        {showModal && <ModalPic><img src={imgURL} alt=""/></ModalPic>}
+      <AppStyle onClick={toggleModal}>
+        <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
+{/* Same as */}
+<ToastContainer />
+        {showModal && <ModalPic closeModal={close}><img src={imgURL} alt=""/></ModalPic>}
         {error && (<p>UPS</p>)}
         <SearcBar onSearch={onSearch}  />
         {isLoading ? 
