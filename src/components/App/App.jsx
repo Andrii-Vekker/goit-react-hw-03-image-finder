@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, createRef } from "react";
 import SearcBar from "components/Searchbar/Searchbar";
 import { AppStyle } from "./App.styled";
 import ImageGallery from "components/ImageGallery/ImageGallery";
@@ -7,6 +7,7 @@ import Button from "components/Button/Button";
 import axios from "axios";
 import Loader from "components/Loader/Loader";
 import ModalPic from "components/Modal/Modal";
+
 
 
 const KEY = "29175258-0e972b66084e1db5719a62740"
@@ -20,6 +21,7 @@ export class App extends Component {
     search: "",
     showModal: false,
     imgURL: "",
+    
   };
   
   fetchImg = async () => {
@@ -29,10 +31,10 @@ export class App extends Component {
     return response.data;
 };
 
-   componentDidMount() {
-     window.addEventListener("keydown", this.hadndleKeyDown);
-       
-  };
+componentDidMount() {
+  window.addEventListener("keydown", this.hadndleKeyDown);
+};
+
 
   componentWillUnmount() {
     window.removeEventListener("keydown", this.hadndleKeyDown);
@@ -99,19 +101,21 @@ export class App extends Component {
    render() {
     const { picture, isLoading, error, showModal, imgURL } = this.state;
     const { loadMore, onSearch, toggleModal, getModalContent } = this
-    console.log(imgURL)
     return (
       <AppStyle   onClick={toggleModal}>
         {showModal && <ModalPic><img src={imgURL} alt=""/></ModalPic>}
         {error && (<p>UPS</p>)}
         <SearcBar onSearch={onSearch}  />
         {isLoading ? 
-          <Loader /> : <ImageGallery pictures={picture} getModalPic={getModalContent} />}
+          <Loader /> : <ImageGallery pictures={picture} getModalPic={getModalContent}/>}
         {picture.length > 0 && <Button onClick={loadMore} />}
     </AppStyle>
   );
   };
 };
+
+
+
 
 // async fetchPictures() {
 //     const { search, page } = this.state;

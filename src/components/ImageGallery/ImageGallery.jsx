@@ -1,6 +1,6 @@
 import { ImageList } from "./ImageGallery.styled";
 import ImageGalleryLIstItem from "components/ImageGalleryItem/ImageGalleryItem";
-
+import PropTypes from 'prop-types';
 
 export default function ImageGallery({ pictures, getModalPic }) {
   return (
@@ -10,4 +10,9 @@ export default function ImageGallery({ pictures, getModalPic }) {
   );
 };
 
+
+ImageGallery.propTypes = {
+  getModalPic: PropTypes.func.isRequired,
+  pictures: PropTypes.array.isRequired
+}
 
