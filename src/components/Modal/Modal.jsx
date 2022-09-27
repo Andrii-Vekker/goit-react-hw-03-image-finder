@@ -19,5 +19,6 @@ export default function ModalPic({ children ,closeModal }) {
 };
  
 ModalPic.propTypes = {
-    children: PropTypes.element.isRequired
+    children: PropTypes.element.isRequired,
+    closeModal: PropTypes.func.isRequired
 }

@@ -12,9 +12,8 @@ const initialValues = {
         name: '',
 };
 export default function SearcBar ({onSearch}) {
-    const handleSubmit = (values, { resetForm }) => {
-        onSearch(values)
-        resetForm();
+    const handleSubmit = (values) => {
+        onSearch(values);
     };
     
     return (
