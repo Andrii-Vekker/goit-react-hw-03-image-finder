@@ -9,8 +9,6 @@ import ModalPic from "components/Modal/Modal";
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 
-
-
 const KEY = "29175258-0e972b66084e1db5719a62740"
 const perPage = "12"
 export class App extends Component {
@@ -43,10 +41,7 @@ componentDidMount() {
   async componentDidUpdate(_, prevState) {
     const { fetchImg, } = this;
     const { page, search, } = this.state;
-    if (prevState.search !== search) {
-      this.setState({ picture: [] });
-    };
-    
+       
     if (prevState.page !== page || 
       prevState.search !== search) {
       try {      
@@ -68,20 +63,20 @@ componentDidMount() {
     };
   };
   
-
   hadndleKeyDown = e => {
     if (e.code === "Escape") {
       this.setState({ showModal: false })
     };
   };
 
-
   onSearch = (text) => {
     const { name } = text
-    this.setState({ search: name })
-    this.setState({page: 1})
+    const { search } = this.state
+    if (search !== name) {
+      this.setState({ search: name, picture: [], page: 1 });
+    };
   };
-
+ 
   loadMore = (e) => {
     e.preventDefault()
     this.setState(prevState => ({
@@ -89,6 +84,7 @@ componentDidMount() {
     }));
 
   };
+  
   toggleModal = (e) => {
     if (e.target.nodeName === "IMG") {
       this.setState(({ showModal }) => ({
@@ -127,29 +123,4 @@ componentDidMount() {
 
 
 
-// async fetchPictures() {
-//     const { search, page } = this.state;
-//     this.setState({ isLoading: true });
-//     try {
-//       this.setState({ isLoading: true });
-//       const data = await fetchImg(search, page).then(data => data.hits);
-//       this.setState(({ picture }) => {
-//         return{
-//           picture: [...picture, ...data]
-//         }
-//       });
-//     } catch (error) {
-//       this.setState({error})
-//     } finally {
-//       this.setState({isLoading: false})
-//     }
-//   };
 
-// function endlessScroll(gallery) {
-//   const { height: cardHeight } =
-//     gallery.firstElementChild.getBoundingClientRect();
-//   window.scrollBy({
-//     top: cardHeight * 2,
-//     behavior: 'smooth',
-//   });
-// }
